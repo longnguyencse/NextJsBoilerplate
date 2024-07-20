@@ -1,0 +1,10 @@
+{
+  "welcome": "welcome {{name}}",
+  "next": "Next",
+  "pay_with_card": "Pay With Card",
+  "reveal_my_match": "Reveal My Match",
+  "help": "Help",
+  "cancel": "Cancel",
+  "learn_more": "Learn More",
+  "close": "Close"
+}

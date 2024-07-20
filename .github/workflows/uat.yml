@@ -1,0 +1,39 @@
+name: uat
+
+on:
+  push:
+    branches:
+      - uat
+env:
+  project_name: "Paramount"
+  project_env: "uat"
+  logo_link: "https://avatars.slack-edge.com/2024-06-21/7323105694849_1e190645e84f59a12a72_48.jpg"
+  slack_username: "GithubCI-Paramount"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: slack start notify
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_ICON: ${{ env.logo_link }}
+          SLACK_USERNAME: ${{ env.slack_username }}
+          SLACK_COLOR: '#717171'
+          SLACK_TITLE: "Job: build and restart `${{env.project_name}}` `${{env.project_env}}`"
+          SLACK_MESSAGE: "Start ... :run::run::run: \n Message: ${{ github.event.head_commit.message }}"
+          MSG_MINIMAL: commit,actions url,
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      - name: slack complete notify
+        uses: rtCamp/action-slack-notify@v2
+        if: always()
+        env:
+          SLACK_ICON: ${{ env.logo_link }}
+          SLACK_USERNAME: ${{ env.slack_username }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "Job: build and restart `${{env.project_name}}` `${{env.project_env}}`"
+          SLACK_MESSAGE: "Result: ${{ job.status }} \n Message: ${{ github.event.head_commit.message }}"
+          MSG_MINIMAL: true
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+
+
